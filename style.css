@@ -86,11 +86,16 @@ main { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; min-height
 .rendered img { max-width: 100%; height: auto; border-radius: 6px; }
 .rendered hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
 
+/* Hidden by default and shown with a class, NOT with the hidden attribute.
+   An author rule setting `display` on an id beats the browser's
+   `[hidden] { display: none }`, so `#drop { display: grid }` left this overlay
+   permanently on top of the page - it covered the whole app on every device. */
 #drop {
-  position: fixed; inset: 0; display: grid; place-items: center;
+  position: fixed; inset: 0; display: none; place-items: center;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   border: 3px dashed var(--accent); font-size: 1.1rem; color: var(--accent); z-index: 10;
 }
+#drop.show { display: grid; }
 
 /* Narrow screens: stack instead of two unusable columns. */
 @media (max-width: 800px) {
@@ -105,10 +110,17 @@ main { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; min-height
   background: var(--fg); color: var(--bg); padding: .5rem 1rem;
   border-radius: 6px; font-size: .85rem; z-index: 20;
 }
+#note[hidden] { display: none; }   /* explicit, for the same reason as #drop */
 
 /* The right pane starts empty; without this it reads as broken rather than
    as waiting for input. */
 .rendered:empty::before {
   content: "Formatted markdown appears here.";
   color: var(--muted); font-style: italic;
+}
+
+/* Touch devices have no drag-and-drop, so the overlay can never be correct
+   there - belt and braces after it shipped stuck-on. */
+@media (hover: none) and (pointer: coarse) {
+  #drop { display: none !important; }
 }

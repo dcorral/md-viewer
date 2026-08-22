@@ -50,14 +50,14 @@
   // Drop anywhere on the page, not just on a target the user has to find.
   var depth = 0;
   window.addEventListener("dragenter", function (e) {
-    e.preventDefault(); depth++; drop.hidden = false;
+    e.preventDefault(); depth++; drop.classList.add("show");
   });
   window.addEventListener("dragover", function (e) { e.preventDefault(); });
   window.addEventListener("dragleave", function () {
-    depth--; if (depth <= 0) { depth = 0; drop.hidden = true; }
+    depth--; if (depth <= 0) { depth = 0; drop.classList.remove("show"); }
   });
   window.addEventListener("drop", function (e) {
-    e.preventDefault(); depth = 0; drop.hidden = true;
+    e.preventDefault(); depth = 0; drop.classList.remove("show");
     load(e.dataTransfer.files[0]);
   });
 
