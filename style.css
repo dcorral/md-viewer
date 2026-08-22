@@ -41,7 +41,7 @@ header h1 { font-size: .95rem; font-weight: 600; margin: 0; letter-spacing: .01e
 .btn:hover { border-color: var(--accent); color: var(--accent); }
 
 main { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; min-height: 0; }
-.pane { min-width: 0; min-height: 0; display: flex; }
+.pane { min-width: 0; min-height: 0; display: flex; position: relative; }
 .pane + .pane { border-left: 1px solid var(--border); }
 
 #src {
@@ -124,3 +124,25 @@ main { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; min-height
 @media (hover: none) and (pointer: coarse) {
   #drop { display: none !important; }
 }
+
+/* Full-screen toggle, one per pane. Sits over its own pane, dim until hovered
+   so it does not compete with the text. */
+.expand {
+  position: absolute; top: .5rem; right: .5rem; z-index: 5;
+  font: inherit; font-size: .9rem; line-height: 1;
+  color: var(--muted); background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: .3rem .45rem; cursor: pointer; opacity: .55;
+}
+.expand:hover, .expand:focus-visible { opacity: 1; color: var(--accent); border-color: var(--accent); }
+.expand svg { display: block; transition: transform .15s ease; }
+/* Rotated when that pane is expanded - the only state change the button needs,
+   and it costs no font support. */
+.expand[aria-pressed="true"] { opacity: 1; color: var(--accent); border-color: var(--accent); }
+.expand[aria-pressed="true"] svg { transform: rotate(45deg); }
+
+/* Both grid properties are set so this works at either breakpoint - the narrow
+   layout uses rows, the wide one uses columns. Class on main outranks the
+   media query by specificity, so source order does not matter. */
+main.focus-src, main.focus-out { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+main.focus-src #pane-out, main.focus-out #pane-src { display: none; }
+main.focus-src #pane-src, main.focus-out #pane-out { border: 0; }

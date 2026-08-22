@@ -7,6 +7,7 @@ Live at [md.dcorral.com](https://md.dcorral.com).
 ## What it does
 
 - Paste or type markdown and see it rendered as you go
+- Expand either side to full screen, `Esc` to go back
 - **Paste** button, or just `Ctrl`/`Cmd`+`V` into the left pane
 - Open a `.md` file, or drop one anywhere on the page
 - **Example** button to load a sample document
@@ -28,6 +29,17 @@ python3 -m http.server 8000
 ```
 
 Then open `http://localhost:8000`.
+
+## Tests
+
+The full-screen toggle is the only stateful logic, so it has a test:
+
+```sh
+node test-toggle.js
+```
+
+It runs the real `app.js` against a stubbed DOM. Note it covers behaviour, not layout - the CSS is
+not tested.
 
 ## Built with
 

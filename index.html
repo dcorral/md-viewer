@@ -23,11 +23,13 @@
 </header>
 
 <main>
-  <section class="pane">
+  <section class="pane" id="pane-src">
+    <button class="expand" type="button" data-pane="src" title="Full screen" aria-label="Full screen editor" aria-pressed="false"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false"><path d="M1.5 5.5v-4h4M14.5 5.5v-4h-4M1.5 10.5v4h4M14.5 10.5v4h-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
     <textarea id="src" spellcheck="false" aria-label="Markdown source"
               placeholder="Paste or type markdown here.&#10;&#10;You can also press Paste above, open a file, or drop a .md file anywhere on the page."></textarea>
   </section>
-  <section class="pane">
+  <section class="pane" id="pane-out">
+    <button class="expand" type="button" data-pane="out" title="Full screen" aria-label="Full screen preview" aria-pressed="false"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false"><path d="M1.5 5.5v-4h4M14.5 5.5v-4h-4M1.5 10.5v4h4M14.5 10.5v4h-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
     <article id="out" class="rendered" aria-live="polite"></article>
   </section>
 </main>

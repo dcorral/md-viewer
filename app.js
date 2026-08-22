@@ -24,6 +24,30 @@
 
   src.addEventListener("input", schedule);
 
+  // Full screen: one pane fills the window, the other is hidden. A class on
+  // <main> drives it, never the hidden attribute - an author `display` rule on
+  // an id beats [hidden], which is how the drop overlay once covered the app.
+  var main = document.querySelector("main");
+  function focusPane(which) {
+    var on = which && !main.classList.contains("focus-" + which);
+    main.classList.remove("focus-src", "focus-out");
+    if (on) main.classList.add("focus-" + which);
+    Array.prototype.forEach.call(document.querySelectorAll(".expand"), function (b) {
+      var active = on && b.dataset.pane === which;
+      // The icon does not change - only its rotation, via aria-pressed in CSS.
+      // Swapping glyphs meant depending on font coverage this cannot verify.
+      b.title = active ? "Exit full screen" : "Full screen";
+      b.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+    if (on && which === "src") src.focus();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".expand"), function (b) {
+    b.addEventListener("click", function () { focusPane(b.dataset.pane); });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") focusPane(null);
+  });
+
   function load(file) {
     if (!file) return;
     var r = new FileReader();
