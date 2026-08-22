@@ -6,8 +6,10 @@ Live at [md.dcorral.com](https://md.dcorral.com).
 
 ## What it does
 
-- Type or paste markdown and see it rendered as you go
+- Paste or type markdown and see it rendered as you go
+- **Paste** button, or just `Ctrl`/`Cmd`+`V` into the left pane
 - Open a `.md` file, or drop one anywhere on the page
+- **Example** button to load a sample document
 - Follows your system light or dark setting
 
 That is the whole thing. There are no accounts, no settings and no export.

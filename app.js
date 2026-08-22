@@ -61,10 +61,10 @@
     load(e.dataTransfer.files[0]);
   });
 
-  src.value = [
+  var EXAMPLE = [
     "# Markdown preview",
     "",
-    "Type on the left. The formatted version appears on the right.",
+    "Paste markdown on the left. The formatted version appears on the right.",
     "",
     "Everything happens in your browser - nothing is uploaded, nothing is stored.",
     "",
@@ -92,5 +92,41 @@
     "- [x] split screen",
     "- [ ] anything else"
   ].join("\n");
+
+  document.getElementById("example").addEventListener("click", function () {
+    src.value = EXAMPLE;
+    render();
+  });
+
+  // Explicit paste. The textarea has always accepted Ctrl/Cmd+V, but a pane
+  // that arrives pre-filled reads as a demo rather than as an input, so the
+  // action is spelled out. readText() needs a secure context and permission,
+  // and Firefox refuses it outright - so failure falls back to focusing the
+  // box and telling the user to use the keyboard, never to a dead button.
+  document.getElementById("paste").addEventListener("click", function () {
+    if (!navigator.clipboard || !navigator.clipboard.readText) return manualPaste();
+    navigator.clipboard.readText().then(function (text) {
+      if (!text) return manualPaste();
+      src.value = text;
+      render();
+      src.scrollTop = 0;
+    }).catch(manualPaste);
+  });
+
+  function manualPaste() {
+    src.focus();
+    src.select();
+    flash("Press " + (navigator.platform.indexOf("Mac") === 0 ? "Cmd" : "Ctrl") + "+V to paste");
+  }
+
+  var noteTimer = null;
+  function flash(msg) {
+    var n = document.getElementById("note");
+    n.textContent = msg;
+    n.hidden = false;
+    if (noteTimer) clearTimeout(noteTimer);
+    noteTimer = setTimeout(function () { n.hidden = true; }, 3000);
+  }
+
   render();
 })();

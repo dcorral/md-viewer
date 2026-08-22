@@ -97,3 +97,18 @@ main { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; min-height
   main { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
   .pane + .pane { border-left: 0; border-top: 1px solid var(--border); }
 }
+
+/* Transient hint, used when the clipboard API is unavailable and the user has
+   to press Ctrl/Cmd+V themselves. */
+#note {
+  position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%);
+  background: var(--fg); color: var(--bg); padding: .5rem 1rem;
+  border-radius: 6px; font-size: .85rem; z-index: 20;
+}
+
+/* The right pane starts empty; without this it reads as broken rather than
+   as waiting for input. */
+.rendered:empty::before {
+  content: "Formatted markdown appears here.";
+  color: var(--muted); font-style: italic;
+}
