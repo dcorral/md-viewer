@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markdown preview</title>
+<meta name="description" content="Split-screen markdown preview. Everything runs in your browser.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128221;</text></svg>">
+</head>
+<body>
+<header>
+  <h1>Markdown preview</h1>
+  <div class="actions">
+    <label class="btn">
+      Open file
+      <input type="file" id="file" accept=".md,.markdown,.mdown,.txt,text/markdown,text/plain" hidden>
+    </label>
+    <button class="btn" id="clear" type="button">Clear</button>
+  </div>
+</header>
+
+<main>
+  <section class="pane">
+    <textarea id="src" spellcheck="false" aria-label="Markdown source"
+              placeholder="Type or paste markdown here, or drop a .md file anywhere on the page."></textarea>
+  </section>
+  <section class="pane">
+    <article id="out" class="rendered" aria-live="polite"></article>
+  </section>
+</main>
+
+<div id="drop" hidden><span>Drop a markdown file</span></div>
+
+<script src="vendor/marked.min.js"></script>
+<script src="vendor/purify.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
